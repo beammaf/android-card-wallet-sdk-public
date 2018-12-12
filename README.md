@@ -19,33 +19,20 @@ In order to use SDK you must be a registered developer with a provisioned API ke
     }
   }
   ```
-* SDK bundle is an .aar file. This aar file should be added as dependency to project level gradle file.
+* Gradle compile dependency
   ```groovy
-  THIS area will change as maven
+    implementation 'com.vngrs.beam:cwsdk:1.0:release@aar'
   ```
 
-* SDK Also requires some extra libraries (RX Java,Retrofit)
+* To your root build.gradle
+    ```groovy
+         maven { url "https://repo.dev.beamuae.app" }
+    ```
 
-```groovy
-
-        RX_VERSION = '2.1.4'
-        RETROFIT_VERSION = '2.4.0'
-
-
-
- 
-        implementation "io.reactivex.rxjava2:rxjava:$RX_VERSION"
-        implementation "io.reactivex.rxjava2:rxandroid:2.0.2"
-    
-        /* Networking */
-        implementation "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
-        implementation "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
-        implementation "com.google.code.gson:gson:2.8.2"
-        implementation "com.squareup.retrofit2:adapter-rxjava2:$RETROFIT_VERSION"
-        implementation 'com.github.rtyley:spongycastle:sc-v1.54.0.0'
-
-
- ```
+* SDK also requires extra library of Android Support Design.
+    ```groovy
+       implementation 'com.android.support:design:27.1.0'
+     ```
 
 # SDK Overview
 
