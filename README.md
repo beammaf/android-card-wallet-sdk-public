@@ -107,28 +107,34 @@ CWSdk.getInstance()
 ```
 
 ## CWSdk 
-* All sdk functions can be accessed from CWSdk object. It's a simple interface to access functionalities of Card Wallet SDK
+* All sdk functions can be accessed from CWSdk object. It's a simple abstract class to access functionalities of Card Wallet SDK
 
 ```java
-public interface CWSdk {
+public abstract class CWSdk {
+  public static final String BUNDLE_CARD_OPERATION_RESULT = "bundle_card_operation_result";
+  public static String LOG_TAG = "FUNDING-SDK";
 
-    static CWSdk getInstance() {return CWSdkImpl.getInstance();}
+  public static CWSdk getInstance() {
+    return CWSdkImpl.getInstance();
+  }
 
-    void start(@NonNull CWServer server, @NonNull CWTokenProvider cwCredentialProvider, CWInitializationListener listener);
 
-    void getCreditCards(CWCallback<List<CreditCard>> callback);
+  abstract public void start(@NonNull CWServer server, @NonNull CWCredentialProvider cwCredentialProvider, CWInitializationListener listener);
 
-    void addCreditCard(Activity activity, int requestCode);
+  abstract public void getCreditCards(CWCallback<List<CreditCard>> callback);
 
-    void addCreditCard(Activity activity, int requestCode, ActivityOptions options);
+  abstract public void addCreditCard(Activity activity, int requestCode);
 
-    void verifyCard(CreditCard creditCard, Activity activity, int requestCode);
+  abstract public void addCreditCard(Activity activity, int requestCode, ActivityOptions options);
 
-    void verifyCard(CreditCard creditCard, Activity activity, int requestCode, ActivityOptions options);
+  abstract public void verifyCard(CreditCard creditCard, Activity activity, int requestCode);
 
-    void deleteCard(CreditCard creditCard, CWCallback<Boolean> listener);
+  abstract public void verifyCard(CreditCard creditCard, Activity activity, int requestCode, ActivityOptions options);
 
-    void clear();
+  abstract public void deleteCard(CreditCard creditCard, CWCallback<Boolean> listener);
+
+
+  abstract public void clear();
 }
 
 ```
