@@ -63,7 +63,6 @@ new CWCredentialProvider() {
 ```java
     public class CardWalletCredentials implements Parcelable {
          private String partnerId;
-         private String userId;
          private String token;
       }
 ```
@@ -90,7 +89,6 @@ CWSdk.getInstance()
                             new CardWalletCredentials()
                             .setToken("TOKEN")
                             .setPartnerId("PARTNER ID")
-                            .setUserId("USER ID");
 
                         cardWalletCredentialsListener.onCredentialReceived(cardWalletCredentials);
                     },
