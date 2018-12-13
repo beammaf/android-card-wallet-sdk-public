@@ -26,7 +26,7 @@ In order to use SDK you must be a registered developer with a provisioned API ke
 
 * To your root build.gradle
     ```groovy
-         maven { url "https://repo.dev.beamuae.app" }
+         maven { url "https://repo.beamuae.app" }
     ```
 
 * SDK also requires extra library of Android Support Design.
