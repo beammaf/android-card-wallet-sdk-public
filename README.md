@@ -21,7 +21,7 @@ In order to use SDK you must be a registered developer with a provisioned API ke
   ```
 * Gradle compile dependency
   ```groovy
-    implementation 'com.vngrs.beam:cwsdk:1.0:release@aar'
+    implementation 'com.beam.uae:cwsdk:1.0:release@aar'
   ```
 
 * To your root build.gradle
@@ -65,7 +65,7 @@ new CWCredentialProvider() {
          private String partnerId;
          private String token;
       }
-```
+```a
 
 
 
