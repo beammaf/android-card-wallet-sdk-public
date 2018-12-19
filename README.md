@@ -65,7 +65,7 @@ new CWCredentialProvider() {
          private String partnerId;
          private String token;
       }
-```a
+```
 
 
 
@@ -121,13 +121,13 @@ public abstract class CWSdk {
 
   abstract public void getCreditCards(CWCallback<List<CreditCard>> callback);
 
-  abstract public void addCreditCard(Activity activity, int requestCode);
+  abstract public void addCreditCard(Activity activity, int requestCode, CwErrorListener addCardErrorListener);
 
-  abstract public void addCreditCard(Activity activity, int requestCode, ActivityOptions options);
+  abstract public void addCreditCard(Activity activity, int requestCode, CwErrorListener addCardErrorListener, ActivityOptions options);
 
-  abstract public void verifyCard(CreditCard creditCard, Activity activity, int requestCode);
+  abstract public void verifyCard(CreditCard creditCard, Activity activity, int requestCode, CwErrorListener addCardErrorListener);
 
-  abstract public void verifyCard(CreditCard creditCard, Activity activity, int requestCode, ActivityOptions options);
+  abstract public void verifyCard(CreditCard creditCard, Activity activity, int requestCode, CwErrorListener addCardErrorListener, ActivityOptions options);
 
   abstract public void deleteCard(CreditCard creditCard, CWCallback<Boolean> listener);
 
@@ -212,13 +212,12 @@ CWSdk.deleteCard(getCreditCard(), new CWCallback<Boolean>() {
 * This function takes to Credit Card and returns boolean response.
 
 #### Add Credit Card
-In order to add credit card, there is a function called addCreditCard(). This function is going to launch.  addCreditCardActivity which is inside the Card Wallet  SDK.
-This UI is fully customizable
+In order to add credit card, there is a function called addCreditCard(). This function is going to launch. addCreditCardActivity which is inside the Card Wallet SDK. **addCreditCard** takes **CwErrorListener** as a parameter. It returns current context and backend errors if there is any. This UI is fully customizable
 
 For more information about customizing UI, Please check "Customizing UI" section.
 
 ```java
-  CWSdk.getInstance().addCreditCard(view.getActivity(), ADD_CARD_REQUEST_CODE)
+  CWSdk.getInstance().addCreditCard(getActivity(), ADD_CARD_REQUEST_CODE, (context, cwError) -> { } )
 ```
 
 This function launch an activity for result. 
@@ -240,14 +239,14 @@ public void activityResult(int requestCode, int resultCode, Intent data) {
 ```
 
 ### Verify Credit Card
-In order to verify credit card, there is a function called verifyCreditCard(). This function is going to launch verifyCreditCardActivity which is inside the Card Wallet SDK.
+In order to verify credit card, there is a function called verifyCreditCard(). This function is going to launch verifyCreditCardActivity which is inside the Card Wallet SDK. **verifyCard** takes **CwErrorListener** as a parameter. It returns current context and backend errors if there is any.
 
 This UI is fully customizable
 
 For more information about customizing UI, Please check "Customizing UI" section.
 
 ```java
- CWSdk.getInstance().verifyCard(getCreditCard(), getActivity(), VERIFY_CARD_REQUEST_CODE);
+ CWSdk.getInstance().verifyCard(getCreditCard(), getActivity(), VERIFY_CARD_REQUEST_CODE, (context, cwError) -> { } );
 
 ```
 
@@ -274,6 +273,7 @@ Card Wallet SDK supports custom UI for AddCreditCard and VerifyCreditCard functi
 ### Add Credit Card Page
 In order to customize Add Credit card ui, **cw_add_card_layout** should be added to project. Card Wallet SDK automatically detects if cw_add_card_layout.xml exists and render it to screen. This xml should contain this fields with specified ids.
 
+
 |  View Type   | Description              |id              |
 | ------------ | ------------------------ |--------------- |
 |  EditText | Credit Card Number Field |edtPanCw       |
@@ -282,6 +282,40 @@ In order to customize Add Credit card ui, **cw_add_card_layout** should be added
 |  EditText | Expiry Date Field        |edtExpiryCw    |
 |  Button   | Submit Button            |btnSubmitCw    |
 
+#### Error Messages
+In order to customize validation error messages and location of error fields, firstly, text fields should create with specified ids.
+
+|  View Type   | Description              |id              |
+| ------------ | ------------------------ |--------------- |
+|  TextView | Card number error field|txtPanError|
+|  TextView | CVC error field|txtCVCError|
+|  TextView | Expire date error field |txtExprError|
+|  TextView | Card holder full name error field |txtNameError|
+
+Secondly, a string array should define in **strings.xml** named **cwsdk_error_map** with specified keys. Keys and values are separated by '|' sign.
+Items should have same pattern as:  `<item>key|value</item>`
+
+```xml
+<string-array name="cwsdk_error_map">
+        <item>CARD_EXPIRED_ERROR|YOUR CUSTOM ERROR</item>
+        <item>CARD_EXPIRY_ERROR |YOUR CUSTOM ERROR</item>
+        <item>CARD_ERROR|YOUR CUSTOM ERROR</item>
+        <item>CVV_ERROR |YOUR CUSTOM ERROR</item>
+        <item>NAME_ERROR|YOUR CUSTOM ERROR</item>
+        <item>SCHEME_ERROR|YOUR CUSTOM ERROR</item>
+    </string-array>
+```
+
+The description of error messages are as follows:
+
+|  Key   | Description              |
+| ------------ | ------------------------ |
+|  CARD_EXPIRED_ERROR | Cards expiry date is not in future. |
+|  CARD_EXPIRY_ERROR  | Cards expiry date is not in valid format |
+|  CARD_ERROR | Card does not pass the Lohan validation |
+|  CVV_ERROR  | CVV length is less than 3 digits             |
+|  NAME_ERROR | Holder name contains only one word             |
+|  SCHEME_ERROR | Card Scheme is not Master Card or VISA             |
 
 
 #### Example Layout
@@ -290,159 +324,230 @@ In order to customize Add Credit card ui, **cw_add_card_layout** should be added
 <?xml version="1.0" encoding="utf-8"?>
 
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:support="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+  xmlns:support="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  >
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/viewToolbar"
-        android:layout_width="0dip"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:minHeight="?android:attr/actionBarSize"
-        android:theme="@style/ThemeOverlay.AppCompat.Light"
-        support:layout_constraintEnd_toEndOf="parent"
-        support:layout_constraintStart_toStartOf="parent"
-        support:layout_constraintTop_toTopOf="parent"
-        support:navigationIcon="@drawable/ic_arrow_back"
-        support:title="@string/str_add_new_card"
-        support:titleTextColor="@color/colorToolbarTextAndIconTint" />
+      android:id="@+id/viewToolbar"
+      android:layout_width="0dip"
+      android:layout_height="wrap_content"
+      android:background="@color/colorPrimary"
+      android:minHeight="?android:attr/actionBarSize"
+      android:theme="@style/ThemeOverlay.AppCompat.Light"
+      support:layout_constraintEnd_toEndOf="parent"
+      support:layout_constraintStart_toStartOf="parent"
+      support:layout_constraintTop_toTopOf="parent"
+      support:navigationIcon="@drawable/ic_arrow_back"
+      support:title="@string/str_add_new_card"
+      support:titleTextColor="@color/colorToolbarTextAndIconTint"
+      />
 
     <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/imgCard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_2x"
-        android:alpha="0.6"
-        android:src="@drawable/ic_credit_card_black_24dp"
-        support:layout_constraintBottom_toBottomOf="@id/number_layout"
-        support:layout_constraintStart_toStartOf="parent"
-        support:layout_constraintTop_toTopOf="@id/number_layout"
+      android:id="@+id/imgCard"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/spacing_2x"
+      android:alpha="0.6"
+      android:src="@drawable/ic_credit_card_black_24dp"
+      support:layout_constraintBottom_toBottomOf="@id/number_layout"
+      support:layout_constraintStart_toStartOf="parent"
+      support:layout_constraintTop_toTopOf="@id/number_layout"
 
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="72dp" />
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/number_layout"
-        style="@style/Beam.TextInputLayout"
-        android:layout_width="0dip"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/spacing_2x"
-        android:layout_marginEnd="@dimen/spacing_2x"
-        android:layout_marginStart="@dimen/spacing_2x"
-        android:layout_marginTop="@dimen/spacing_2x"
-        android:theme="@style/Beam.TextInputLayout"
-        support:layout_constraintEnd_toEndOf="parent"
-        support:layout_constraintStart_toEndOf="@id/imgCard"
-        support:layout_constraintTop_toBottomOf="@+id/viewToolbar">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/edtPanCw"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:digits="0,1,2,3,4,5,6,7,8,9, "
-            android:drawableEnd="@drawable/icon_card_mastercard"
-            android:hint="@string/label_card_number"
-            android:inputType="number"
-            android:maxLength="19" />
-    </android.support.design.widget.TextInputLayout>
-
+      tools:layout_editor_absoluteX="0dp"
+      tools:layout_editor_absoluteY="72dp"
+      />
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/expiry_layout"
-        style="@style/Beam.TextInputLayout"
-        android:layout_width="0dip"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/spacing_2x"
-        android:layout_marginEnd="@dimen/spacing_2x"
-        android:layout_marginTop="@dimen/spacing_2x"
-        android:theme="@style/Beam.TextInputLayout"
-        support:layout_constraintEnd_toStartOf="@id/cvc_layout"
-        support:layout_constraintStart_toStartOf="@id/number_layout"
-        support:layout_constraintTop_toBottomOf="@+id/number_layout">
+      android:id="@+id/number_layout"
+      android:layout_width="0dip"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="@dimen/spacing_2x"
+      android:layout_marginEnd="@dimen/spacing_2x"
+      android:layout_marginStart="@dimen/spacing_2x"
+      android:layout_marginTop="@dimen/spacing_2x"
+      android:theme="@style/Beam.TextInputLayout"
+      support:layout_constraintEnd_toEndOf="parent"
+      support:layout_constraintStart_toEndOf="@id/imgCard"
+      support:layout_constraintTop_toBottomOf="@+id/viewToolbar"
+      style="@style/Beam.TextInputLayout"
+      >
 
         <android.support.design.widget.TextInputEditText
-            android:id="@+id/edtExpiryCw"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:digits="0,1,2,3,4,5,6,7,8,9,/"
-            android:hint="@string/label_mm_yy"
-            android:inputType="number"
-            android:maxLength="5" />
+          android:id="@+id/edtPanCw"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:digits="0,1,2,3,4,5,6,7,8,9, "
+          android:drawableEnd="@drawable/icon_card_mastercard"
+          android:hint="@string/label_card_number"
+          android:inputType="number"
+          android:maxLength="19"
+          />
     </android.support.design.widget.TextInputLayout>
+
+    <TextView
+      android:id="@+id/txtPanError"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/spacing_7x"
+      android:text="PAN ERROR"
+      android:visibility="gone"
+      android:textColor="@color/beam_error"
+      android:textSize="@dimen/font_xss"
+      support:layout_constraintLeft_toLeftOf="parent"
+      support:layout_constraintRight_toRightOf="parent"
+      support:layout_constraintTop_toBottomOf="@id/number_layout"
+      />
 
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/cvc_layout"
-        style="@style/Beam.TextInputLayout"
-        android:layout_width="0dip"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/spacing_2x"
-        android:layout_marginEnd="@dimen/spacing_2x"
-        android:layout_marginStart="@dimen/spacing_2x"
-        android:layout_marginTop="@dimen/spacing_2x"
-        android:theme="@style/Beam.TextInputLayout"
-        support:layout_constraintEnd_toEndOf="parent"
-        support:layout_constraintStart_toEndOf="@+id/expiry_layout"
-        support:layout_constraintTop_toBottomOf="@+id/number_layout">
+      android:id="@+id/expiry_layout"
+      android:layout_width="0dip"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="@dimen/spacing_2x"
+      android:layout_marginEnd="@dimen/spacing_2x"
+      android:layout_marginTop="@dimen/spacing_2x"
+      android:theme="@style/Beam.TextInputLayout"
+      support:layout_constraintEnd_toStartOf="@id/cvc_layout"
+      support:layout_constraintStart_toStartOf="@id/number_layout"
+      support:layout_constraintTop_toBottomOf="@+id/txtPanError"
+      style="@style/Beam.TextInputLayout"
+      >
 
         <android.support.design.widget.TextInputEditText
-            android:id="@+id/edtCvcCw"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/label_cvc"
-            android:drawableEnd="@drawable/ic_payment_black_24_px"
-            android:inputType="number"
-            android:maxLength="3" />
+          android:id="@+id/edtExpiryCw"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:digits="0,1,2,3,4,5,6,7,8,9,/"
+          android:hint="@string/label_mm_yy"
+          android:inputType="number"
+          android:maxLength="5"
+          />
     </android.support.design.widget.TextInputLayout>
+
+    <TextView
+      android:id="@+id/txtExprError"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/spacing_half"
+      android:text="EXP ERROR"
+      android:visibility="gone"
+      android:textColor="@color/beam_error"
+      android:textSize="@dimen/font_xss"
+      support:layout_constraintEnd_toEndOf="@id/expiry_layout"
+      support:layout_constraintStart_toStartOf="@id/expiry_layout"
+      support:layout_constraintTop_toBottomOf="@+id/expiry_layout"
+      />
 
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/full_name_layout"
-        style="@style/Beam.TextInputLayout"
-        android:layout_width="0dip"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/spacing_2x"
-        android:layout_marginEnd="@dimen/spacing_2x"
-        android:layout_marginTop="@dimen/spacing_2x"
-        android:theme="@style/Beam.TextInputLayout"
-        support:layout_constraintEnd_toEndOf="parent"
-        support:layout_constraintStart_toStartOf="@id/number_layout"
-        support:layout_constraintTop_toBottomOf="@+id/cvc_layout">
+      android:id="@+id/cvc_layout"
+      android:layout_width="0dip"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="@dimen/spacing_2x"
+      android:layout_marginEnd="@dimen/spacing_2x"
+      android:layout_marginStart="@dimen/spacing_2x"
+      android:layout_marginTop="@dimen/spacing_2x"
+      android:theme="@style/Beam.TextInputLayout"
+      support:layout_constraintEnd_toEndOf="parent"
+      support:layout_constraintStart_toEndOf="@+id/expiry_layout"
+      support:layout_constraintTop_toBottomOf="@+id/txtPanError"
+      style="@style/Beam.TextInputLayout"
+      >
 
         <android.support.design.widget.TextInputEditText
-            android:id="@+id/edtFulltNameCw"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/label_name_on_card"
-            android:inputType="textCapWords"
-            android:maxLines="1" />
+          android:id="@+id/edtCvcCw"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:drawableEnd="@drawable/ic_payment_black_24_px"
+          android:hint="@string/label_cvc"
+          android:inputType="number"
+          android:maxLength="3"
+          />
     </android.support.design.widget.TextInputLayout>
+
+
+    <TextView
+      android:id="@+id/txtCVCError"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/spacing_half"
+      android:text="CVC ERROR"
+      android:visibility="gone"
+      android:textColor="@color/beam_error"
+      android:textSize="@dimen/font_xss"
+      support:layout_constraintEnd_toEndOf="@id/cvc_layout"
+      support:layout_constraintStart_toStartOf="@id/cvc_layout"
+      support:layout_constraintTop_toBottomOf="@+id/cvc_layout"
+      />
+
+
+    <android.support.design.widget.TextInputLayout
+      android:id="@+id/full_name_layout"
+      android:layout_width="0dip"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="@dimen/spacing_2x"
+      android:layout_marginEnd="@dimen/spacing_2x"
+      android:layout_marginTop="@dimen/spacing_2x"
+      android:theme="@style/Beam.TextInputLayout"
+      support:layout_constraintEnd_toEndOf="parent"
+      support:layout_constraintStart_toStartOf="@id/number_layout"
+      support:layout_constraintTop_toBottomOf="@+id/cvc_layout"
+      style="@style/Beam.TextInputLayout"
+      >
+
+        <android.support.design.widget.TextInputEditText
+          android:id="@+id/edtFullNameCw"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:hint="@string/label_name_on_card"
+          android:inputType="textCapWords"
+          android:maxLines="1"
+          />
+    </android.support.design.widget.TextInputLayout>
+
+
+    <TextView
+      android:id="@+id/txtNameError"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/spacing_half"
+      android:text="NAME ERROR"
+      android:visibility="gone"
+      android:textColor="@color/beam_error"
+      android:textSize="@dimen/font_xss"
+      support:layout_constraintEnd_toEndOf="@id/full_name_layout"
+      support:layout_constraintStart_toStartOf="@id/full_name_layout"
+      support:layout_constraintTop_toBottomOf="@+id/full_name_layout"
+      />
 
     <ProgressBar
-        android:id="@+id/viewProgress"
-        android:layout_width="wrap_content"
-        android:layout_height="0dip"
-        android:theme="@style/Widget.AppCompat.ProgressBar"
-        support:layout_constraintBottom_toBottomOf="@+id/btnSubmitCw"
-        support:layout_constraintEnd_toEndOf="@+id/btnSubmitCw"
-        support:layout_constraintTop_toTopOf="@+id/btnSubmitCw" />
+      android:id="@+id/viewProgress"
+      android:layout_width="wrap_content"
+      android:layout_height="0dip"
+      android:theme="@style/Widget.AppCompat.ProgressBar"
+      support:layout_constraintBottom_toBottomOf="@+id/btnSubmitCw"
+      support:layout_constraintEnd_toEndOf="@+id/btnSubmitCw"
+      support:layout_constraintTop_toTopOf="@+id/btnSubmitCw"
+      />
 
 
     <Button
-        android:id="@+id/btnSubmitCw"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="@dimen/spacing_2x"
-        android:layout_marginEnd="@dimen/spacing_2x"
-        android:layout_marginStart="@dimen/spacing_2x"
-        android:layout_marginTop="@dimen/spacing_2x"
-        android:enabled="false"
-        android:text="@string/label_done"
-        support:layout_constraintEnd_toEndOf="parent"
-        support:layout_constraintTop_toBottomOf="@id/full_name_layout" />
+      android:id="@+id/btnSubmitCw"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_marginBottom="@dimen/spacing_2x"
+      android:layout_marginEnd="@dimen/spacing_2x"
+      android:layout_marginStart="@dimen/spacing_2x"
+      android:layout_marginTop="@dimen/spacing_2x"
+      android:enabled="false"
+      android:text="@string/label_done"
+      support:layout_constraintEnd_toEndOf="parent"
+      support:layout_constraintTop_toBottomOf="@id/full_name_layout"
+      />
 
 
 </android.support.constraint.ConstraintLayout>
