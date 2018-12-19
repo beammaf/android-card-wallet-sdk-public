@@ -212,7 +212,7 @@ CWSdk.deleteCard(getCreditCard(), new CWCallback<Boolean>() {
 * This function takes to Credit Card and returns boolean response.
 
 #### Add Credit Card
-In order to add credit card, there is a function called addCreditCard(). This function is going to launch. addCreditCardActivity which is inside the Card Wallet SDK. **addCreditCard** takes **CwErrorListener** as a parameter. It returns current context and backend errors if there is any. This UI is fully customizable
+In order to add credit card, there is a function called addCreditCard(). This function is going to launch. addCreditCardActivity which is inside the Card Wallet SDK. **addCreditCard** takes **CwErrorListener** as a parameter. It returns current context and backend error if there is any. This UI is fully customizable
 
 For more information about customizing UI, Please check "Customizing UI" section.
 
@@ -298,9 +298,9 @@ Items should have same pattern as:  `<item>key|value</item>`
 ```xml
 <string-array name="cwsdk_error_map">
         <item>CARD_EXPIRED_ERROR|YOUR CUSTOM ERROR</item>
-        <item>CARD_EXPIRY_ERROR |YOUR CUSTOM ERROR</item>
+        <item>CARD_EXPIRY_ERROR|YOUR CUSTOM ERROR</item>
         <item>CARD_ERROR|YOUR CUSTOM ERROR</item>
-        <item>CVV_ERROR |YOUR CUSTOM ERROR</item>
+        <item>CVV_ERROR|YOUR CUSTOM ERROR</item>
         <item>NAME_ERROR|YOUR CUSTOM ERROR</item>
         <item>SCHEME_ERROR|YOUR CUSTOM ERROR</item>
     </string-array>
