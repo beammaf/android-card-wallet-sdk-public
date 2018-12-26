@@ -273,6 +273,8 @@ Card Wallet SDK supports custom UI for AddCreditCard and VerifyCreditCard functi
 ### Add Credit Card Page
 In order to customize Add Credit card ui, **cw_add_card_layout** should be added to project. Card Wallet SDK automatically detects if cw_add_card_layout.xml exists and render it to screen. This xml should contain this fields with specified ids.
 
+Scan card feature is optional. In order to not use, btnScanCw should not add to custom **cw_add_card_layout**.
+
 
 |  View Type   | Description              |id              |
 | ------------ | ------------------------ |--------------- |
@@ -281,6 +283,8 @@ In order to customize Add Credit card ui, **cw_add_card_layout** should be added
 |  EditText | CVC Number               |edtCvcCw       |
 |  EditText | Expiry Date Field        |edtExpiryCw    |
 |  Button   | Submit Button            |btnSubmitCw    |
+|  Button (Optional)  | Scan Card Button         |btnScanCw    |
+
 
 #### Error Messages
 In order to customize validation error messages and location of error fields, firstly, text fields should create with specified ids.
