@@ -162,13 +162,10 @@ This class is a model used as a reference of CreditCard. isValid() returns statu
 ```java
 public class CreditCard implements Parcelable {
 
-    private String cardToken;
-    private String cardNumber;
-    private String cvv;
-    private String expiryDate;
-    private String cardholderName;
+    private String cardToken = "";
+    private String cardNumber = "";
     private CardStatus status;
-    private boolean requiresVerification = false;
+    private boolean requiresVerification = true;
     private int verificationAttemptsLeft = 3;
     private boolean canSendNewVerification = true;
 
