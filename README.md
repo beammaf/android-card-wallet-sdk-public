@@ -156,6 +156,8 @@ public enum CWServer {
 #### CreditCard
 This class is a model used as a reference of CreditCard. isValid() returns status of Credit card.
 
+**status, requiresVerification, verificationAttemptsLeft, canSendNewVerification** fields returns from backend when getting cards. That fields should be **null** when adding card.
+
 
 ```java
 public class CreditCard implements Parcelable {
@@ -171,13 +173,23 @@ public class CreditCard implements Parcelable {
     private boolean canSendNewVerification = true;
 
     public boolean isValid() {
-        return status == CardStatus.SUCCESS
-            || status == CardStatus.PENDING
-            || status == CardStatus.AVAILABLE;
+        return  status == CardStatus.PENDING || status == CardStatus.AVAILABLE;
     }
 }
 
+
 ```
+
+#### Card status
+
+|  Enum   | Description              |
+| ------------ | ------------------------|
+|  PENDING | Card is added, but waiting for verification.|
+|  AVAILABLE | Card is added and verified.|
+|  ERROR | There was an error on either adding or verifying the card.|
+|  DISABLED | Card is deleted and won't be used.|
+
+
 
 #### Get Credit Cards
 ```java
@@ -263,6 +275,10 @@ public void activityResult(int requestCode, int resultCode, Intent data) {
         }
 }
 ```
+
+### clear
+
+Cw Sdk uses observable pattern on card operations. It observes status of operations as Async. **clear()** should use in **onStop** or **onDestroy** (according to integrator's usage) on screens that getting or deleting cards. For other operations like **add** and **verify**, Cw Sdk automatically handles them.
 
 
 
