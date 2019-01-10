@@ -246,8 +246,8 @@ public void activityResult(int requestCode, int resultCode, Intent data) {
 ```
 
 ### Verify Credit Card
-```
-CWSdk.getInstance()..verifyCard(creditCard, amount, view.getContext(), new CWCallback<CreditCard>() {
+```java
+CWSdk.getInstance().verifyCard(creditCard, amount, view.getContext(), new CWCallback<CreditCard>() {
             @Override public void onSuccess(CreditCard result) {
 
             }
