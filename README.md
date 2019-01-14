@@ -21,7 +21,7 @@ In order to use SDK you must be a registered developer with a provisioned API ke
   ```
 * Gradle compile dependency
   ```groovy
-    implementation 'app.beamuae:cwsdk:1.0.3:release@aar'
+    implementation 'app.beamuae:cwsdk:1.0.4:release@aar'
   ```
 
 * To your root build.gradle
@@ -121,7 +121,7 @@ public abstract class CWSdk {
 
     abstract public void getCreditCards(CWCallback<List<CreditCard>> callback);
 
-    abstract public void verifyCard(CreditCard creditCard, double verifiedAmount, Context context, CWCallback<CreditCard> callback);
+    abstract public void verifyCard(CreditCard creditCard, String verifiedAmount, Context context, CWCallback<CreditCard> callback);
 
     abstract public void addCreditCard(Activity activity, int requestCode, CwErrorListener addCardErrorListener);
 
@@ -263,7 +263,7 @@ CWSdk.getInstance().verifyCard(creditCard, amount, view.getContext(), new CWCall
 
 ### clear
 
-Cw Sdk uses observable pattern on card operations. It observes status of operations as Async. **clear()** should use in **onStop** or **onDestroy** (according to integrator's usage) on screens that getting or deleting cards. For other operations like **add** and **verify**, Cw Sdk automatically handles them.
+Cw Sdk uses observable pattern on card operations. It observes status of operations as Async. **clear()** should use in **onStop** or **onDestroy** (according to integrator's usage) on screens that getting, deleting and verifying cards. For **add** operation, Cw Sdk automatically handles them.
 
 
 
@@ -565,4 +565,4 @@ The description of error messages are as follows:
 
 
 ## Version
-* 1.0.2
+* 1.0.4
