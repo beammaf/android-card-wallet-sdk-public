@@ -18,16 +18,17 @@ In order to use SDK you must be a registered developer with a provisioned API ke
         targetCompatibility JavaVersion.VERSION_1_8
     }
   }
+
   ```
+* To your root build.gradle
+  ```groovy
+       maven { url "https://repo.beamuae.app" }
+  ```
+
 * Gradle compile dependency
   ```groovy
     implementation 'app.beamuae:cwsdk:1.0.4:release@aar'
   ```
-
-* To your root build.gradle
-    ```groovy
-         maven { url "https://repo.beamuae.app" }
-    ```
 
 * SDK also requires extra library of Android Support Design. Minimum requirement of Support version is **27.1.0**
     ```groovy
