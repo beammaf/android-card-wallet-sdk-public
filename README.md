@@ -168,9 +168,6 @@ public class CreditCard implements Parcelable {
     private int verificationAttemptsLeft = 3;
     private boolean canSendNewVerification = true;
 
-    public boolean isValid() {
-        return  status == CardStatus.PENDING || status == CardStatus.AVAILABLE;
-    }
 }
 
 
