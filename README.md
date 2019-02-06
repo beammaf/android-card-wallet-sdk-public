@@ -279,10 +279,10 @@ Scan card feature is optional. In order to not use, btnScanCw should not add to 
 
 |  View Type   | Description              |id              |
 | ------------ | ------------------------ |--------------- |
-|  EditText | Credit Card Number Field |edtPanCw       |
-|  EditText | Name Surname             |edtFullNameCw |
-|  EditText | CVC Number               |edtCvcCw       |
-|  EditText | Expiry Date Field        |edtExpiryCw    |
+|  CardWalletEditText | Credit Card Number Field |edtPanCw       |
+|  CardWalletEditText | Name Surname             |edtFullNameCw |
+|  CardWalletEditText | CVC Number               |edtCvcCw       |
+|  CardWalletEditText | Expiry Date Field        |edtExpiryCw    |
 |  Button   | Submit Button            |btnSubmitCw    |
 |  Button (Optional)  | Scan Card Button         |btnScanCw    |
 
