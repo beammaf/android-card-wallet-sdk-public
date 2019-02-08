@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * TPS SDK Android Copyright (C) 2018 Fatih.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+ -->
+<android.support.constraint.ConstraintLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:support="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <android.support.v7.widget.Toolbar
+    android:id="@+id/viewToolbar"
+    support:navigationIcon="@drawable/ic_arrow_back"
+    support:layout_constraintStart_toStartOf="parent"
+    support:layout_constraintEnd_toEndOf="parent"
+    support:layout_constraintTop_toTopOf="parent"
+    android:theme="@style/ThemeOverlay.AppCompat.Light"
+    android:minHeight="?android:attr/actionBarSize"
+    android:background="@color/colorPrimary"
+    support:titleTextColor="@color/colorToolbarTextAndIconTint"
+    android:layout_width="0dip"
+    android:layout_height="wrap_content" />
+
+  <android.support.design.widget.TextInputLayout
+    android:id="@+id/viewTextInputLayout"
+    style="@style/Beam.TextInputLayout"
+    android:layout_marginBottom="@dimen/spacing_2x"
+    android:layout_marginStart="@dimen/spacing_9x"
+    android:layout_marginEnd="@dimen/spacing_2x"
+    android:layout_marginTop="@dimen/spacing_2x"
+    support:layout_constraintStart_toStartOf="parent"
+    support:layout_constraintEnd_toEndOf="parent"
+    support:layout_constraintTop_toBottomOf="@+id/viewToolbar"
+    android:layout_width="0dip"
+    android:layout_height="wrap_content">
+
+    <android.support.design.widget.TextInputEditText
+      android:id="@+id/edtVerifyAmountCw"
+      android:inputType="numberDecimal"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
+
+  </android.support.design.widget.TextInputLayout>
+
+  <Button
+    android:id="@+id/edtSubmitVerifyCw"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/spacing_2x"
+    support:layout_constraintTop_toBottomOf="@+id/viewTextInputLayout"
+    support:layout_constraintEnd_toEndOf="parent"
+    style="@style/Beam.Button"
+    android:textAllCaps="true"
+    android:visibility="visible"
+    android:text="@string/label_done"/>
+
+  <ProgressBar
+    android:id="@+id/viewProgress"
+    android:layout_width="wrap_content"
+    android:layout_height="0dip"
+    android:theme="@style/Widget.AppCompat.ProgressBar"
+    support:layout_constraintTop_toTopOf="@+id/edtSubmitVerifyCw"
+    support:layout_constraintEnd_toEndOf="@+id/edtSubmitVerifyCw"
+    support:layout_constraintBottom_toBottomOf="@+id/edtSubmitVerifyCw" />
+
+  <TextView
+    android:id="@+id/viewTextTitle"
+    style="@style/Beam.Text.H4"
+    android:layout_marginStart="@dimen/spacing_9x"
+    android:layout_marginEnd="@dimen/spacing_2x"
+    support:layout_constraintStart_toStartOf="parent"
+    support:layout_constraintEnd_toEndOf="parent"
+    support:layout_constraintTop_toBottomOf="@+id/edtSubmitVerifyCw"
+    android:layout_width="0dip"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/spacing_4x"
+    android:textColor="@color/beam_grey"
+    android:typeface="monospace"/>
+
+  <TextView
+    style="@style/Beam.Text.S"
+    android:id="@+id/viewTextMessage"
+    android:layout_marginTop="@dimen/spacing_4x"
+    support:layout_constraintTop_toBottomOf="@+id/viewTextTitle"
+    android:layout_width="0dip"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/spacing_9x"
+    android:layout_marginEnd="@dimen/spacing_2x"
+    support:layout_constraintStart_toStartOf="parent"
+    support:layout_constraintEnd_toEndOf="parent"
+    android:text="@string/label_limits_apply_until_verified"
+    android:textColor="@color/beam_grey_light"
+    android:typeface="monospace"/>
+
+  <TextView
+    android:id="@+id/viewTextLink"
+    style="@style/Beam.Text.S"
+    support:layout_constraintTop_toBottomOf="@+id/viewTextMessage"
+    android:layout_width="0dip"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/spacing_9x"
+    android:layout_marginEnd="@dimen/spacing_2x"
+    support:layout_constraintStart_toStartOf="parent"
+    support:layout_constraintEnd_toEndOf="parent"
+    android:layout_marginTop="@dimen/spacing_2x"
+    android:textColor="@color/beam_grey_light"
+    android:textColorHighlight="@color/beam_cta_20"
+    android:textColorLink="@color/beam_cta"
+    android:typeface="monospace" />
+
+</android.support.constraint.ConstraintLayout>

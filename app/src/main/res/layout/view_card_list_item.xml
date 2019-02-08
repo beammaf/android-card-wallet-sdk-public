@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * TPS SDK Android Copyright (C) 2018 Fatih.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+ -->
+<android.support.constraint.ConstraintLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:support="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:background="#FFFFFF"
+  android:padding="16dip"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content">
+
+  <TextView
+    android:id="@+id/txtCardNumber"
+    support:layout_constraintStart_toStartOf="parent"
+    support:layout_constraintEnd_toEndOf="parent"
+    support:layout_constraintTop_toTopOf="parent"
+    support:layout_constraintBottom_toTopOf="@+id/txtVerify"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+    android:textColor="#000000"
+    android:typeface="sans"
+    tools:text="@string/app_name" />
+
+  <TextView
+    android:id="@+id/txtVerify"
+    support:layout_constraintStart_toStartOf="parent"
+    support:layout_constraintEnd_toEndOf="parent"
+    support:layout_constraintTop_toBottomOf="@+id/txtCardNumber"
+    android:layout_marginTop="10dp"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+    android:textColor="#FF0000"
+    android:typeface="sans"
+    android:visibility="gone"
+    android:textSize="14sp"
+    android:text="@string/verify_card" />
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- theme defaults -->
+    <color name="colorPrimary">#575da9</color>
+    <color name="colorPrimaryDark">#7e1212</color>
+    <color name="colorAccent">#976d00</color>
+
+    <color name="colorToolbarTextAndIconTint">@android:color/white</color>
+</resources>

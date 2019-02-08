@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Beam CW Sample App</string>
+    <string name="start_parking_experience">Start Parking UI</string>
+
+    <string name="verify_card">Not Verified</string>
+
+    <string name="str_hint_license_plate">License Plate</string>
+    <string name="str_hint_model">Model</string>
+    <string name="str_hint_year">Year</string>
+
+    <string name="str_button_save_title">save</string>
+
+    <string name="str_vehicle_list">Vehicle List</string>
+    <string name="str_credit_card_list">Credit Card List</string>
+    <string name="str_add_new_vehicle">Add New Vehicle</string>
+
+    <!--<string-array name="cwsdk_error_map">
+        <item>CARD_EXPIRED_ERROR| CARD_EXPIRED_ERROR</item>
+        <item>CARD_ERROR |CARD_ERROR</item>
+        <item>CVV_ERROR |CVV_ERROR</item>
+        <item>NAME_ERROR|NAME_ERROR</item>
+        <item>SCHEME_ERROR|SCHEME_ERROR</item>
+    </string-array>-->
+</resources>
