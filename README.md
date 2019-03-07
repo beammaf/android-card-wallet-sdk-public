@@ -27,7 +27,7 @@ In order to use SDK you must be a registered developer with a provisioned API ke
 
 * Gradle compile dependency
   ```groovy
-    implementation ('app.beamuae:cwsdk:1.0.7:release@aar'){
+    implementation ('app.beamuae:cwsdk:1.0.16:release@aar'){
         transitive = true
     }
   ```
@@ -221,7 +221,15 @@ CWSdk.deleteCard(getCreditCard(), new CWCallback<Boolean>() {
 #### Add Credit Card
 In order to add credit card, there is a function called addCreditCard(). This function is going to launch. addCreditCardActivity which is inside the Card Wallet SDK. **addCreditCard** takes **CwErrorListener** as a parameter. It returns current context and backend error if there is any. This UI is fully customizable
 
-For more information about customizing UI, Please check "Customizing UI" section.
+Firstly, `AddCardActivity` should define in xml. Suggested theme is `Theme.AppCompat.Light.NoActionBar` but it is customizable.  
+
+```xml
+<activity
+          android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+          android:name="com.beamuae.cwsdk.AddCardActivity"/>
+``` 
+
+Then addCreditCard can use like;
 
 ```java
   CWSdk.getInstance().addCreditCard(getActivity(), ADD_CARD_REQUEST_CODE, (context, cwError) -> { } )
@@ -283,8 +291,16 @@ Scan card feature is optional. In order to not use, btnScanCw should not add to 
 |  CardWalletEditText | Name Surname             |edtFullNameCw |
 |  CardWalletEditText | CVC Number               |edtCvcCw       |
 |  CardWalletEditText | Expiry Date Field        |edtExpiryCw    |
-|  Button   | Submit Button            |btnSubmitCw    |
-|  Button (Optional)  | Scan Card Button         |btnScanCw    |
+|  View   | Submit Button            |btnSubmitCw    |
+|  View (Optional)  | Scan Card Button         |btnScanCw    |
+
+In order to customize **Theme** of Add Card screen, `AddCardActivity`'s theme should change in Manifest.
+
+```xml
+<activity
+          android:theme="@style/CustomTheme"
+          android:name="com.beamuae.cwsdk.AddCardActivity"/>
+``` 
 
 
 #### Error Messages
