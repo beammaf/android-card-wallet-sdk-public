@@ -27,7 +27,7 @@ In order to use SDK you must be a registered developer with a provisioned API ke
 
 * Gradle compile dependency
   ```groovy
-    implementation ('app.beamuae:cwsdk:1.0.16:release@aar'){
+    implementation ('app.beamuae:cwsdk:1.0.17:release@aar'){
         transitive = true
     }
   ```
