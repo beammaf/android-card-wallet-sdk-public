@@ -287,10 +287,10 @@ Scan card feature is optional. In order to not use, btnScanCw should not add to 
 
 |  View Type   | Description              |id              |
 | ------------ | ------------------------ |--------------- |
-|  CardWalletEditText | Credit Card Number Field |edtPanCw       |
-|  CardWalletEditText | Name Surname             |edtFullNameCw |
-|  CardWalletEditText | CVC Number               |edtCvcCw       |
-|  CardWalletEditText | Expiry Date Field        |edtExpiryCw    |
+|  TextInputLayout | Credit Card Number Field |edtPanCw       |
+|  TextInputLayout | Name Surname             |edtFullNameCw |
+|  TextInputLayout | CVC Number               |edtCvcCw       |
+|  TextInputLayout | Expiry Date Field        |edtExpiryCw    |
 |  View   | Submit Button            |btnSubmitCw    |
 |  View (Optional)  | Scan Card Button         |btnScanCw    |
 
@@ -401,7 +401,7 @@ The description of error messages are as follows:
       android:text="PAN ERROR"
       android:textColor="@color/beam_error"
       android:textSize="@dimen/font_xss"
-      android:visibility="gone"
+      android:visibility="invisible"
       support:layout_constraintLeft_toLeftOf="@id/number_layout"
       support:layout_constraintRight_toRightOf="@id/number_layout"
       support:layout_constraintTop_toBottomOf="@id/number_layout"
@@ -442,7 +442,7 @@ The description of error messages are as follows:
       android:text="EXP ERROR"
       android:textColor="@color/beam_error"
       android:textSize="@dimen/font_xss"
-      android:visibility="gone"
+      android:visibility="invisible"
       support:layout_constraintEnd_toEndOf="@id/expiry_layout"
       support:layout_constraintStart_toStartOf="@id/expiry_layout"
       support:layout_constraintTop_toBottomOf="@+id/expiry_layout"
@@ -485,7 +485,7 @@ The description of error messages are as follows:
       android:text="CVC ERROR"
       android:textColor="@color/beam_error"
       android:textSize="@dimen/font_xss"
-      android:visibility="gone"
+      android:visibility="invisible"
       support:layout_constraintEnd_toEndOf="@id/cvc_layout"
       support:layout_constraintStart_toStartOf="@id/cvc_layout"
       support:layout_constraintTop_toBottomOf="@+id/cvc_layout"
@@ -526,7 +526,7 @@ The description of error messages are as follows:
       android:text="NAME ERROR"
       android:textColor="@color/beam_error"
       android:textSize="@dimen/font_xss"
-      android:visibility="gone"
+      android:visibility="invisible"
       support:layout_constraintEnd_toEndOf="@id/full_name_layout"
       support:layout_constraintStart_toStartOf="@id/full_name_layout"
       support:layout_constraintTop_toBottomOf="@+id/full_name_layout"
@@ -556,6 +556,7 @@ The description of error messages are as follows:
       support:layout_constraintTop_toBottomOf="@id/full_name_layout"
       support:layout_constraintStart_toStartOf="parent"
       />
+
 
     <Button
       android:id="@+id/btnSubmitCw"
