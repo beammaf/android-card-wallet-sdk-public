@@ -204,7 +204,7 @@ public class CreditCard implements Parcelable {
 
 #### Delete Credit Card
 ```java
-CWSdk.deleteCard(getCreditCard(), new CWCallback<Boolean>() {
+CWSdk.getInstance().deleteCard(getCreditCard(), new CWCallback<Boolean>() {
             @Override
             public void onSuccess(Boolean result) {
                 
@@ -217,6 +217,42 @@ CWSdk.deleteCard(getCreditCard(), new CWCallback<Boolean>() {
     });
 ```
 * This function takes to Credit Card and returns boolean response.
+
+#### Example usage of get and delete
+
+```java
+List<CreditCard> cardList = new ArrayList<>;
+
+private void getCards() {
+        CWSdk.getInstance().getCreditCards(new CWCallback<List<CreditCard>>() {
+                    @Override
+                    public void onSuccess(List<CreditCard> result) {
+                            cardList = result;                
+                    }
+        
+                    @Override
+                    public void onError(CWError error) {
+        
+                    }
+                });
+}
+
+private void removeCard(int position) {
+
+        CWSdk.getInstance().deleteCard(cardList.get(position), new CWCallback<Boolean>() {
+            @Override public void onSuccess(Boolean result) {
+                
+            }
+
+            @Override public void onError(CWError error) {
+                
+            }
+        });
+    }
+```
+
+
+
 
 #### Add Credit Card
 In order to add credit card, there is a function called addCreditCard(). This function is going to launch. addCreditCardActivity which is inside the Card Wallet SDK. **addCreditCard** takes **CwErrorListener** as a parameter. It returns current context and backend error if there is any. This UI is fully customizable
@@ -252,6 +288,8 @@ public void activityResult(int requestCode, int resultCode, Intent data) {
     }
 }
 ```
+
+`addCreditCard` calls `startActivityForResult` and it starts an activity. Added card from add card screen and result of operation comes back to `activityResult`. Addedd card can get with `data.getParcelableExtra(CWSdk.BUNDLE_CARD_OPERATION_RESULT)` and result can check as `Activity.RESULT_OK` or `Activity.RESULT_CANCELED`      
 
 ### Verify Credit Card
 ```java
@@ -302,6 +340,7 @@ In order to customize **Theme** of Add Card screen, `AddCardActivity`'s theme sh
           android:name="com.beamuae.cwsdk.AddCardActivity"/>
 ``` 
 
+**Note that;** If Theme used with a toolbar for example `Theme.AppCompat.Light.DarkActionBar` and a toolbar component added in custom xml, there will be two toolbar in app. Toolbar should delete from xml or theme should be use with `NoActionBar` theme.
 
 #### Error Messages
 In order to customize validation error messages and location of error fields, firstly, text fields should create with specified ids.
@@ -582,4 +621,4 @@ The description of error messages are as follows:
 
 
 ## Version
-* 1.0.22098
+* 1.0.20
