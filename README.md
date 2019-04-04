@@ -259,6 +259,7 @@ In order to add credit card, there is a function called addCreditCard(). This fu
 
 Firstly, `AddCardActivity` should define in xml. Suggested theme is `Theme.AppCompat.Light.NoActionBar` but it is customizable.  
 
+In order to saving data when screen rotation, `android:configChanges="orientation|screenSize"` should be added to manifest.
 ```xml
 <activity
           android:theme="@style/Theme.AppCompat.Light.NoActionBar"
