@@ -263,6 +263,7 @@ In order to saving data when screen rotation, `android:configChanges="orientatio
 ```xml
 <activity
           android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+          android:configChanges="orientation|screenSize"
           android:name="com.beamuae.cwsdk.AddCardActivity"/>
 ``` 
 
