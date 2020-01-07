@@ -22,6 +22,8 @@ import com.beamuae.cwsdk.CWSdk;
 import com.beamuae.cwsdk.shared.CWCallback;
 import com.beamuae.cwsdk.shared.CWError;
 import com.beamuae.cwsdk.CreditCard;
+import com.beamuae.cwsdk.views.verifyCard.presenter.VerifyCardActivityPresenterImp;
+import com.beamuae.cwsdk.views.verifyCard.ui.VerifyCardActivity;
 import com.vngrs.cwsdksample.BuildConfig;
 import com.vngrs.cwsdksample.base.AbstractPresenter;
 import com.vngrs.cwsdksample.base.BusManager;
@@ -29,7 +31,7 @@ import com.vngrs.cwsdksample.base.ObservableList;
 import com.vngrs.cwsdksample.base.SimpleItemTouchCallback;
 import com.vngrs.cwsdksample.model.event.SelectedCardEvent;
 import com.vngrs.cwsdksample.view.CardListActivityView;
-import com.vngrs.cwsdksample.view.VerifyCardActivity;
+
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import java.util.List;

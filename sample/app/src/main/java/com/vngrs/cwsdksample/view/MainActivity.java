@@ -16,6 +16,7 @@
 package com.vngrs.cwsdksample.view;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
@@ -25,10 +26,15 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+
 import com.vngrs.cwsdksample.BuildConfig;
 import com.vngrs.cwsdksample.R;
+import com.vngrs.cwsdksample.SelectServerActivity;
 import com.vngrs.cwsdksample.base.AbstractActivity;
 import com.vngrs.cwsdksample.base.ObservableList;
 import com.vngrs.cwsdksample.model.Category;
@@ -69,6 +75,25 @@ public class MainActivity extends AbstractActivity<MainActivityPresenter> implem
 
   @NonNull @Override public MainActivityPresenter presenter() {
     return new MainActivityPresenterImp(this, dataSet);
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    MenuInflater inflater = getMenuInflater();
+    inflater.inflate(R.menu.main_menu, menu);
+    return true;
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    // Handle item selection
+    switch (item.getItemId()) {
+      case R.id.action_settings:
+        startActivity(new Intent(this, SelectServerActivity.class));
+        return true;
+      default:
+        return super.onOptionsItemSelected(item);
+    }
   }
 
   @Override public void showError(String message) {

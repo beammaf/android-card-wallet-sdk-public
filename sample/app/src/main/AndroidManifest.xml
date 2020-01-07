@@ -5,7 +5,7 @@
 
     <application
         android:name=".SampleApplication"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -15,15 +15,12 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".view.MainActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.CardListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.VerifyCardActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".TokenActivity"
+            android:name=".SelectServerActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,6 +28,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".TokenActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:configChanges="orientation|screenSize"
+            android:name="com.beamuae.cwsdk.AddCardActivity"/>
+
+        <activity
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:configChanges="orientation|screenSize"
+            android:name="com.beamuae.cwsdk.views.verifyCard.ui.VerifyCardActivity"/>
     </application>
 
 </manifest>
