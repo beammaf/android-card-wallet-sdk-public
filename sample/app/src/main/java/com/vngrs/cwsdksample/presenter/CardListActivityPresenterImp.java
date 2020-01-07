@@ -18,12 +18,12 @@ package com.vngrs.cwsdksample.presenter;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.widget.Toast;
+
 import com.beamuae.cwsdk.CWSdk;
+import com.beamuae.cwsdk.CreditCard;
 import com.beamuae.cwsdk.shared.CWCallback;
 import com.beamuae.cwsdk.shared.CWError;
-import com.beamuae.cwsdk.CreditCard;
-import com.beamuae.cwsdk.views.verifyCard.presenter.VerifyCardActivityPresenterImp;
-import com.beamuae.cwsdk.views.verifyCard.ui.VerifyCardActivity;
 import com.vngrs.cwsdksample.BuildConfig;
 import com.vngrs.cwsdksample.base.AbstractPresenter;
 import com.vngrs.cwsdksample.base.BusManager;
@@ -32,12 +32,13 @@ import com.vngrs.cwsdksample.base.SimpleItemTouchCallback;
 import com.vngrs.cwsdksample.model.event.SelectedCardEvent;
 import com.vngrs.cwsdksample.view.CardListActivityView;
 
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
 import java.util.List;
 
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+
 public class CardListActivityPresenterImp extends AbstractPresenter<CardListActivityView>
-    implements CardListActivityPresenter {
+        implements CardListActivityPresenter {
 
     private static final int VERIFY_CARD_REQUEST_CODE = 55;
     private static final int ADD_CARD_REQUEST_CODE = 56;
@@ -46,90 +47,135 @@ public class CardListActivityPresenterImp extends AbstractPresenter<CardListActi
     private final CWSdk sdk;
 
     public CardListActivityPresenterImp(@NonNull CardListActivityView view,
-        ObservableList<CreditCard> dataSet) {
+                                        ObservableList<CreditCard> dataSet) {
         super(view);
         this.dataSet = dataSet;
         this.sdk = CWSdk.getInstance();
     }
 
-    @Override public void onCreate() {
+    @Override
+    public void onCreate() {
         if (view.isAvailable()) {
             view.setUp();
             loadCards();
         }
     }
 
-    @Override public void onStart() {
+    @Override
+    public void onStart() {
         if (view.isAvailable()) {
             Disposable observeBusManager = BusManager.add(evt -> {
                 if (evt instanceof SelectedCardEvent) {
                     SelectedCardEvent event = (SelectedCardEvent) evt;
+                    //TODO open veify activity
+/*
+                    Log.v("ClickVeify","true");
                     Intent intent = new Intent(view.getContext(), VerifyCardActivity.class);
                     intent.putExtra(VerifyCardActivityPresenterImp.BUNDLE_ARGS_FUNDING_SOURCE, event.getCreditCard());
                     view.getActivity().startActivityForResult(intent, VERIFY_CARD_REQUEST_CODE);
+*/
+                   /* Disposable observeVerifyCard = view.observeVerifyCard().subscribe(v -> verifyCard(event.getCreditCard()));
+                    disposeBag.add(observeVerifyCard);*/
+                    verifyCard(event.getCreditCard());
 
                 }
             });
 
+
             disposeBag.add(observeBusManager);
 
             Disposable observeNavigationClick =
-                view.observeNavigationClick().subscribe(v -> onBackPressed());
+                    view.observeNavigationClick().subscribe(v -> onBackPressed());
             disposeBag.add(observeNavigationClick);
 
             Disposable observeAddCard = view.observeAddCardClick()
-                .subscribe(v -> CWSdk.getInstance()
-                    .addCreditCard(
-                        view.getActivity(),
-                        ADD_CARD_REQUEST_CODE,
-                        (context, cwError) -> view.showError("error message = " + cwError.getErrorDescription() + "\n error code = " + cwError.getErrorCode())));
+                    .subscribe(v -> CWSdk.getInstance()
+                            .addCreditCard(
+                                    view.getActivity(),
+                                    ADD_CARD_REQUEST_CODE,
+                                    (context, cwError) -> view.showError("error message = " + cwError.getErrorDescription() + "\n error code = " + cwError.getErrorCode())));
             disposeBag.add(observeAddCard);
 
             //checkIfDataSetNeedsLoad();
         }
     }
 
-    @Override public void activityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == ADD_CARD_REQUEST_CODE) {
-            if (resultCode == Activity.RESULT_OK) {
-                if (data != null) {
-                    CreditCard card = data.getParcelableExtra(CWSdk.BUNDLE_CARD_OPERATION_RESULT);
-                    if (card != null) {
-                        dataSet.add(card);
+    private void verifyCard(CreditCard creditCard) {
+        sdk.verifyCard(view.getActivity(), creditCard, (context, cwError) -> view.showError("error message = " + cwError.getErrorDescription() + "\n error code = " + cwError.getErrorCode()), VERIFY_CARD_REQUEST_CODE, null, new CWCallback<CreditCard>() {
+            @Override
+            public void onSuccess(CreditCard result) {
+                Toast.makeText(view.getContext(), "Card status" + result.getStatus(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(CWError error) {
+                Toast.makeText(view.getContext(), error.getErrorDescription(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    @Override
+    public void activityResult(int requestCode, int resultCode, Intent data) {
+
+        switch (requestCode) {
+            case ADD_CARD_REQUEST_CODE:
+                if (resultCode == Activity.RESULT_OK) {
+                    if (data != null) {
+                        CreditCard card = data.getParcelableExtra(CWSdk.BUNDLE_CARD_OPERATION_RESULT);
+                        if (card != null && card.getStatus() != null && card.isValid()) {
+                            dataSet.add(card);
+                        }
                     }
+                } else if (resultCode == Activity.RESULT_CANCELED) {
+                    updateList();
                 }
-            }
-        }
-        if (requestCode == VERIFY_CARD_REQUEST_CODE) {
-            if (resultCode == Activity.RESULT_OK) {
-                dataSet.clear();
-                loadCards();
-            }
+                break;
+            case VERIFY_CARD_REQUEST_CODE:
+                if (resultCode == Activity.RESULT_OK) {
+                    dataSet.clear();
+                    loadCards();
+                }
+                break;
+
+            case Activity.RESULT_CANCELED:
+                updateList();
+                break;
         }
     }
 
-    @Override public void onStop() {
+    private void updateList() {
+        dataSet.clear();
+        loadCards();
+    }
+
+    @Override
+    public void onStop() {
         disposeBag.clear();
     }
 
-    @Override public void onBackPressed() {
+    @Override
+    public void onBackPressed() {
         if (view.isAvailable()) {
             view.finish();
         }
     }
 
-    @Override protected boolean isLogEnabled() {
+    @Override
+    protected boolean isLogEnabled() {
         return BuildConfig.DEBUG;
     }
 
-    @Override protected String getClassTag() {
+    @Override
+    protected String getClassTag() {
         return CardListActivityPresenterImp.class.getSimpleName();
     }
 
-    @Override public SimpleItemTouchCallback.Callback swipeListener() {
+    @Override
+    public SimpleItemTouchCallback.Callback swipeListener() {
         return position -> {
             if (view.isAvailable()) {
-                CreditCard  removed = dataSet.remove(position);
+                CreditCard removed = dataSet.remove(position);
                 removeCard(removed, position);
             }
         };
@@ -138,21 +184,23 @@ public class CardListActivityPresenterImp extends AbstractPresenter<CardListActi
     private void checkIfDataSetNeedsLoad() {
         if (dataSet.isEmpty()) {
             loadCards();
-          }
+        }
     }
 
     private void removeCard(CreditCard removed, int position) {
         view.showProgress();
 
         sdk.deleteCard(removed, new CWCallback<Boolean>() {
-            @Override public void onSuccess(Boolean result) {
+            @Override
+            public void onSuccess(Boolean result) {
                 if (view.isAvailable()) {
                     view.hideProgress();
                     view.showInfo("removed " + removed.getCardNumber());
                 }
             }
 
-            @Override public void onError(CWError error) {
+            @Override
+            public void onError(CWError error) {
                 if (view.isAvailable()) {
                     dataSet.add(position, removed);
                     view.hideProgress();
@@ -165,15 +213,15 @@ public class CardListActivityPresenterImp extends AbstractPresenter<CardListActi
     private void loadCards() {
         view.showProgress();
         sdk.getCreditCards(new CWCallback<List<CreditCard>>() {
-            @Override public void onSuccess(List<CreditCard> result) {
+            @Override
+            public void onSuccess(List<CreditCard> result) {
                 if (result != null && !result.isEmpty()) dataSet.addAll(result);
                 CreditCard creditCard = new CreditCard();
-
                 view.hideProgress();
             }
 
-            @Override public void onError(CWError error) {
-
+            @Override
+            public void onError(CWError error) {
                 view.hideProgress();
             }
         });

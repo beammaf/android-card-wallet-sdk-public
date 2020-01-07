@@ -15,9 +15,10 @@
  */
 package com.vngrs.cwsdksample.base;
 
-import io.reactivex.functions.Predicate;
 import java.util.Collection;
 import java.util.List;
+
+import io.reactivex.functions.Predicate;
 
 final class Collections {
 

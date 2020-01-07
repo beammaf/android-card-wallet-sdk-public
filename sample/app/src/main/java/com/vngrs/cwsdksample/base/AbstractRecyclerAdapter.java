@@ -18,6 +18,7 @@ package com.vngrs.cwsdksample.base;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
@@ -37,7 +38,7 @@ public abstract class AbstractRecyclerAdapter<D, V extends AbstractRecyclerViewH
     dataSet.registerPropertyChangedListener(this);
   }
 
-  @Override public void onDetachedFromRecyclerView(@NonNull  RecyclerView recyclerView) {
+  @Override public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
     dataSet.unregisterPropertyChangedListener(this);
     super.onDetachedFromRecyclerView(recyclerView);
   }

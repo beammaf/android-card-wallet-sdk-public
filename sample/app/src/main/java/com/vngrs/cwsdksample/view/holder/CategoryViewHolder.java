@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.vngrs.cwsdksample.BuildConfig;
 import com.vngrs.cwsdksample.R;
 import com.vngrs.cwsdksample.base.AbstractRecyclerViewHolder;
@@ -26,11 +27,12 @@ import com.vngrs.cwsdksample.base.BusManager;
 import com.vngrs.cwsdksample.base.RxView;
 import com.vngrs.cwsdksample.model.Category;
 import com.vngrs.cwsdksample.model.event.SelectedCategoryEvent;
+
 import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
-public class CategoryViewHolder extends AbstractRecyclerViewHolder<Category>{
+public class CategoryViewHolder extends AbstractRecyclerViewHolder<Category> {
 
   private final CompositeDisposable disposeBag = new CompositeDisposable();
 

@@ -16,12 +16,14 @@
 package com.vngrs.cwsdksample.base;
 
 import android.support.annotation.NonNull;
-import io.reactivex.functions.Predicate;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+
+import io.reactivex.functions.Predicate;
 
 public class ObservableList<T> extends ArrayList<T> {
 

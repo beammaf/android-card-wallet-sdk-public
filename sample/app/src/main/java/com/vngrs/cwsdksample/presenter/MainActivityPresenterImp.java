@@ -18,15 +18,16 @@ package com.vngrs.cwsdksample.presenter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 
-import com.beamuae.cwsdk.CreditCard;
-import com.beamuae.cwsdk.shared.CardWalletCredentials;
 import com.beamuae.cwsdk.CWSdk;
+import com.beamuae.cwsdk.CreditCard;
 import com.beamuae.cwsdk.shared.CWCredentialProvider;
 import com.beamuae.cwsdk.shared.CWError;
 import com.beamuae.cwsdk.shared.CWInitializationListener;
 import com.beamuae.cwsdk.shared.CWServer;
+import com.beamuae.cwsdk.shared.CardWalletCredentials;
 import com.beamuae.cwsdk.shared.CardWalletCredentialsListener;
 import com.vngrs.cwsdksample.BuildConfig;
 import com.vngrs.cwsdksample.base.AbstractPresenter;
@@ -37,15 +38,17 @@ import com.vngrs.cwsdksample.model.event.SelectedCategoryEvent;
 import com.vngrs.cwsdksample.view.CardListActivity;
 import com.vngrs.cwsdksample.view.MainActivityView;
 
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
-
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Random;
 
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+
+import static com.vngrs.cwsdksample.SelectServerActivity.SERVER_NAME;
+
 public class MainActivityPresenterImp extends AbstractPresenter<MainActivityView> implements MainActivityPresenter,
-    CWCredentialProvider {
+        CWCredentialProvider {
 
     private static final String SALT_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
     private static final Random RANDOM = new Random();
@@ -55,6 +58,7 @@ public class MainActivityPresenterImp extends AbstractPresenter<MainActivityView
     private final CompositeDisposable disposeBag = new CompositeDisposable();
     private final ObservableList<Category> dataSet;
     private final String email;
+    private CWServer mCwServer;
 
     private final static int REQUEST_CODE_ADD_CARD = 0x33;
 
@@ -69,6 +73,26 @@ public class MainActivityPresenterImp extends AbstractPresenter<MainActivityView
         super(view);
         this.dataSet = dataSet;
         this.email = String.format(Locale.US, EMAIL_FORMAT, toSaltString());
+    }
+
+    @Override
+    public void restoreState(Bundle restoreState) {
+        super.restoreState(restoreState);
+        if (restoreState != null) {
+            if (restoreState.containsKey(SERVER_NAME)) {
+                mCwServer = (CWServer) restoreState.getSerializable(SERVER_NAME);
+            }
+        }
+    }
+
+    @Override
+    public void storeState(Bundle storeState) {
+        super.storeState(storeState);
+        if (storeState != null) {
+            if (storeState.containsKey(SERVER_NAME)) {
+                mCwServer = (CWServer) storeState.getSerializable(SERVER_NAME);
+            }
+        }
     }
 
     @Override
@@ -139,7 +163,7 @@ public class MainActivityPresenterImp extends AbstractPresenter<MainActivityView
             dataSet.addAll(Arrays.asList(categories));
         }
     }
-
+    //To open card list activity
     private void onCategorySelected(Category category) {
         if (Category.INITIALIZE_CW_SDK.equals(category)) {
             initializeBMSdk();
@@ -157,7 +181,7 @@ public class MainActivityPresenterImp extends AbstractPresenter<MainActivityView
 
     private void initializeBMSdk() {
         view.showProgress();
-        CWSdk.getInstance().start(CWServer.STAGING, this, new CWInitializationListener() {
+        CWSdk.getInstance().start(mCwServer, this, new CWInitializationListener() {
             @Override
             public void onSdkInitialized() {
                 sdkInitialized = true;

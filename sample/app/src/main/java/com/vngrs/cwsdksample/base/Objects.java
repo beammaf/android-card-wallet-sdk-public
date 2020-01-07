@@ -16,13 +16,15 @@
 package com.vngrs.cwsdksample.base;
 
 import android.text.TextUtils;
-import io.reactivex.functions.Predicate;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Collections;
+
+import io.reactivex.functions.Predicate;
 
 public final class Objects {
 

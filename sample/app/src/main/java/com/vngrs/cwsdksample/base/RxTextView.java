@@ -17,7 +17,6 @@ package com.vngrs.cwsdksample.base;
 
 import android.widget.EditText;
 
-
 import io.reactivex.Observable;
 
 public class RxTextView {

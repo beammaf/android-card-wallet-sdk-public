@@ -21,11 +21,10 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.MenuItem;
 
-
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-public abstract class AbstractPresenter<V extends  ViewType> {
+public abstract class AbstractPresenter<V extends ViewType> {
 
   protected final V view;
 

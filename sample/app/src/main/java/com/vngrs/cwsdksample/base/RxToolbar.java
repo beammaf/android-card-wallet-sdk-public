@@ -18,7 +18,6 @@ package com.vngrs.cwsdksample.base;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-
 import io.reactivex.Observable;
 
 public class RxToolbar {

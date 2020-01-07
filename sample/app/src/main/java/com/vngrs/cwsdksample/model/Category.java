@@ -17,6 +17,7 @@ package com.vngrs.cwsdksample.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import com.vngrs.cwsdksample.base.Objects;
 
 public class Category implements Parcelable {

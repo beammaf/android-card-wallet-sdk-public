@@ -17,8 +17,6 @@ package com.vngrs.cwsdksample.base;
 
 import android.view.View;
 
-
-
 import io.reactivex.Observable;
 
 public class RxView {

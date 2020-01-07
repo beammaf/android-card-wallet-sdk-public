@@ -17,6 +17,7 @@ package com.vngrs.cwsdksample.view.adapter;
 
 import android.support.annotation.NonNull;
 import android.view.ViewGroup;
+
 import com.beamuae.cwsdk.CreditCard;
 import com.vngrs.cwsdksample.BuildConfig;
 import com.vngrs.cwsdksample.base.AbstractRecyclerAdapter;
