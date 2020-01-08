@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#880E4F</color>
+    <color name="colorPrimaryDark">#6c0b3f</color>
+    <color name="colorAccent">#AD1457</color>
+
+    <color name="maroon">#ff8a1538</color>
+    <color name="pink_800">#AD1457</color>
+    <color name="pink_900">#880E4F</color>
+
+    <color name="maroon_50_opacity">#7F8A1538</color>
+    <color name="red">#FFFF0000</color>
+    <color name="gold">#FFB49746</color>
+    <color name="black">#FF31261D</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="white_50_opacity">#80FFFFFF</color>
+    <color name="green">#FF6AA439</color>
+    <color name="green_800">#2E7D32</color>
+    <color name="green_900">#1B5E20</color>
+    <color name="orange">#FFFF8926</color>
+    <color name="grey">#FF9E9C93</color>
+    <color name="grey_94">#FFF1F1F1</color>
+    <color name="grey_75">#FFC0C0C0</color>
+    <color name="grey_37">#FF606060</color>
+    <color name="grey_24">#FF3D3D3D</color>
+    <color name="biege_grey">#FFAAA39B</color>
+    <color name="beige">#FFF5f4f1</color>
+    <color name="black_30_opacity">#1E000000</color>
+    <color name="gold_darker">#B4985A</color>
+    <color name="gold_lighter">#FFACA39A</color>
+    <color name="gold_light">#FFC8BEBE</color>
+    <color name="deep_blue">#FF4252A8</color>
+    <color name="bright_grey">#5F6062</color>
+    <color name="light_reddish_gray">#E5E2E2</color>
+    <color name="light_orangish_gray">#D8CFC6</color>
+</resources>

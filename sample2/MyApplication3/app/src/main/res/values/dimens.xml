@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- region Margin and Padding-->
+    <dimen name="spacing_all_tiny">2dp</dimen>
+    <dimen name="spacing_all_xsmall">4dp</dimen>
+    <dimen name="spacing_all_small">8dp</dimen>
+    <dimen name="spacing_all_medium_small">12dp</dimen>
+    <dimen name="spacing_all_medium">16dp</dimen>
+    <dimen name="spacing_all_medium_large">20dp</dimen>
+    <dimen name="spacing_all_large_small">24dp</dimen>
+    <dimen name="spacing_all_large">32dp</dimen>
+    <dimen name="spacing_all_extra_large">40dp</dimen>
+    <dimen name="spacing_all_xlarge">56dp</dimen>
+    <dimen name="spacing_all_xlarge_large">72dp</dimen>
+
+    <dimen name="text_size_subtext_s2">20sp</dimen>
+    <dimen name="text_size_subtext_s3">16sp</dimen>
+    <dimen name="text_size_paragraph">14sp</dimen>
+    <dimen name="text_size_caption">12sp</dimen>
+    <dimen name="text_size_label">10sp</dimen>
+
+    <dimen name="settings_item_button_height">56dp</dimen>
+
+    <dimen name="alert_width">280dp</dimen>
+    <!-- endregion Margin and Padding -->
+</resources>

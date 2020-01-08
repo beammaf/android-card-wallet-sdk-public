@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">CardW test</string>
+
+    <string name="ny_token">
+        eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik1VSkVSVUU1UlVWRU5VSXpRakZFTVVReE5ETkNSRFkyTTBNeVFqVkZNa1V6TVVFMk1UVTFNUSJ9.eyJodHRwczovL21hZi5ncmF2dHkuYXV0aC9kZXYvYXBpL21lbWJlcklkIjoiSjlaSUlVUCIsImh0dHBzOi8vbWFmLmdyYXZ0eS5hdXRoL2Rldi9hcGkvdm94TWVtYmVySWQiOiJDSU5FUVdHRENQOVZRTCIsImlzcyI6Imh0dHBzOi8vaWRlbnRpdHkubWFmLWRldi5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWM3Y2M4NWU4NWI1NmIyNTkwZDNmNWM4IiwiYXVkIjpbImh0dHBzOi8vbWFmLmdyYXZ0eS5hdXRoL2Rldi9hcGkiLCJodHRwczovL2lkZW50aXR5Lm1hZi1kZXYuYXV0aDAuY29tL3VzZXJpbmZvIl0sImlhdCI6MTU1ODU2NTMzNywiZXhwIjoxNTU4NjUxNzM3LCJhenAiOiI3UHpRMWNjRlNPNUhQZzFzMVd2U2R5bzR2MXJkdHc1ZSIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgcmVhZDphcHBfbWV0YWRhdGEgdXBkYXRlOmFwcF9tZXRhZGF0YSB1cGRhdGU6dXNlcnMgcmVhZDplbWFpbCByZWFkOnVzZXJfbWV0YWRhdGEgcmVhZDpjdXJyZW50X3VzZXJfbWV0YWRhdGEgcmVhZDpwcm9maWxlIHJlYWQ6b3BlbklkIHJlYWQ6dXNlcl9pZHBfdG9rZW5zIHJlYWQ6dXNlcnMgcmVhZDptZXNzYWdlcyByZWFkOmJ1cm5wb2ludHMgcmVhZDplYXJucG9pbnRzIiwiZ3R5IjoicGFzc3dvcmQifQ.k18QrLZqlsq5rfbPBs0EzEbmSH-fspTDhu_hanFIfQap6UwZGp82NcN5l4WRr1PdV7SSv_venjeCGEFwqbL2hFB8FwWjkGYXe8dJazigl8nDY3d90e5Ly4kaXvZQAq_flOA8YJ8Y3kMwhoCodHMbUHLEShqkV1m3arFJ6LU8mSSoX0PBBNDmYqt8qT6fJ-SIkWUKiEsAq_sW0RuGIGl2krFQFEGRysPYeST_C92pmU-Z28lb6ndsEQuDcO02Gfc4ymUmGpAXeILnzEITHWLGi0M6J3_I5RNdG4iYdo7hn3k2orhCJ9W3Bzmf6MyeIOzpxZQl48Xve_rAPT65WEl1dg
+    </string>
+    <string name="txt_loyalty">LOYALTY</string>
+    <string name="txt_add_token">please add token or partner id</string>
+    <string name="txtCancelintSDk">Oops!, u can\'t use the SDK ,   please add token and partner id</string>
+    <string name="dialog_title">please add token and partner id to use the SDK</string>
+    <string name="txt_submit">Submit</string>
+    <string name="txtCancel">Cancel</string>
+
+    <string-array name="cwsdk_error_map">
+        <item>CARD_EXPIRED_ERROR|YOUR CUSTOM ERROR</item>
+        <item>CARD_EXPIRY_ERROR|YOUR CUSTOM ERROR</item>
+        <item>CARD_ERROR|YOUR CUSTOM ERROR</item>
+        <item>CVV_ERROR|YOUR CUSTOM ERROR</item>
+        <item>NAME_ERROR|YOUR CUSTOM ERROR</item>
+        <item>SCHEME_ERROR|YOUR CUSTOM ERROR</item>
+    </string-array>
+</resources>
